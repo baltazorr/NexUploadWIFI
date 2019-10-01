@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript">
+            var partSize = 100;
+            var file;
+            var cmp;
+            var offset = 0;
+            function upload() {
+              file = document.querySelector('input[name=file]').files[0];
+              partSize = parseInt(document.querySelector('input[name=partSize]').value);
+              cmp = document.getElementById('completed');
+
+              if (file) {
+                sendInfo(file.size);
+              } else {
+                alert('Choose firmware file.');
+              }
+            };
+
+	    function sendDataHandler(event) {
+              if (event.target.error == null) {
+                cmp.innerText = (offset * 100 / file.size).toFixed(1) + "%";
+                offset += event.target.result.byteLength;
+              } else {
+                alert("Error: " + event.target.error);
+                return;
+              }
+
+              var xmlHttp = new XMLHttpRequest();
+              xmlHttp.onreadystatechange = function()
+              {
+                  if(xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                  {
+                    if (offset < file.size) {
+                      sendData();
+                    } else {
+                      cmp.innerText = "All data was sent";
+                    }
+                  }
+              };
+              xmlHttp.open("post", "/u"); 
+              xmlHttp.send(event.target.result);
+            }
+
+            function sendData() {
+              var reader = new FileReader();
+              var blob = file.slice(offset, partSize + offset);
+              reader.onload = sendDataHandler;
+              reader.readAsArrayBuffer(blob);
+            }
+            
+            function sendInfo(size) {
+              var xmlHttp = new XMLHttpRequest();
+              xmlHttp.onreadystatechange = function()
+              {
+                if(xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                {
+                  sendData();
+                }
+              };
+              xmlHttp.open("post", "/s"); 
+              xmlHttp.send(size); 
+            }
+        </script>
+    </head>
+    <body>
+        <input type="file" name="file"/>
+        <input type="button" value="upload" onclick="upload()"/>
+        <br/>
+	<label id="completed"></label>
+	<br/>
+        Chunk size: <input type="text" name="partSize" value="1024" size="4"/>
+    </body>
+</html>
