@@ -16,8 +16,6 @@
 #ifndef __NEXUPLOAD_H__
 #define __NEXUPLOAD_H__
 #include <Arduino.h>
-#include <SPI.h>
-#include "SPIFFS.h"
 #include "NexHardware.h"
 
 /**
