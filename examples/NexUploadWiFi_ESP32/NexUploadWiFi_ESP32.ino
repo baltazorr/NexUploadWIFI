@@ -26,8 +26,8 @@ NexUploadWIFI nex_uploader(115200);
 AsyncWebServer server(80);
 
 // Credentials for WiFi connection
-const char* ssid     = "ASUS";
-const char* password = "special5";
+const char* ssid     = "";
+const char* password = "";
 
 // Async Web Server Requests Handler
 void webServerHandler() {
