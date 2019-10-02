@@ -3,8 +3,8 @@
  *
  * The definition of class NexUpload. 
  *
- * @author Chen Zengpeng (email:<zengpeng.chen@itead.cc>)
- * @date 2016/3/29
+ * @author Chen Zengpeng (email:<zengpeng.chen@itead.cc>), Bogdan Symchych (email:<bogdan.symchych@gmail.com>)
+ * @date 2019/10/1
  *
  * @copyright 
  * Copyright (C) 2014-2015 ITEAD Intelligent Systems Co., Ltd. \n
